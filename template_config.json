@@ -1,0 +1,266 @@
+{
+    "page_width": 612,
+    "page_height": 792,
+    "corners": {
+        "TL": [
+            60.0,
+            60.0
+        ],
+        "TR": [
+            552.0,
+            60.0
+        ],
+        "BL": [
+            60.0,
+            732.0
+        ],
+        "BR": [
+            552.0,
+            732.0
+        ]
+    },
+    "preguntas": [
+        {
+            "id": 1,
+            "text": "¿Vive en Amatitlán o en un municipio cercano?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 240,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 240,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "¿Tiene disponibilidad para trabajar en Amatitlán?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 288,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 288,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "¿Tiene disponibilidad para trabajar en turnos rotativos?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 336,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 336,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "¿Puede trabajar en horario nocturno?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 384,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 384,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "¿Cuenta con transporte propio o una forma segura de movilizarse?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 432,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 432,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "¿Tiene experiencia en producción, bodega, despacho o planta?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 480,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 480,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "¿Cuánto tiempo de experiencia tiene?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sin experiencia",
+                    "x": 90,
+                    "y": 528,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "Menos de 1 año",
+                    "x": 210,
+                    "y": 528,
+                    "radius": 7
+                },
+                {
+                    "indice": 2,
+                    "texto": "De 1 a 2 años",
+                    "x": 330,
+                    "y": 528,
+                    "radius": 7
+                },
+                {
+                    "indice": 3,
+                    "texto": "Más de 2 años",
+                    "x": 450,
+                    "y": 528,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "¿Cuál es su nivel educativo?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Primaria",
+                    "x": 90,
+                    "y": 576,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "Básicos",
+                    "x": 210,
+                    "y": 576,
+                    "radius": 7
+                },
+                {
+                    "indice": 2,
+                    "texto": "Diversificado",
+                    "x": 330,
+                    "y": 576,
+                    "radius": 7
+                },
+                {
+                    "indice": 3,
+                    "texto": "Universidad",
+                    "x": 450,
+                    "y": 576,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "¿Cuándo podría iniciar?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Inmediatamente",
+                    "x": 90,
+                    "y": 624,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "En 1 semana",
+                    "x": 210,
+                    "y": 624,
+                    "radius": 7
+                },
+                {
+                    "indice": 2,
+                    "texto": "En 15 días",
+                    "x": 330,
+                    "y": 624,
+                    "radius": 7
+                },
+                {
+                    "indice": 3,
+                    "texto": "Más de 15 días",
+                    "x": 450,
+                    "y": 624,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 672,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 672,
+                    "radius": 7
+                }
+            ]
+        }
+    ]
+}

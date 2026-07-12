@@ -1,0 +1,19 @@
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+
+# Archivos de datos locales y escaneos
+data/
+
+# Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Variables de entorno locales y secretos
+.streamlit/secrets.toml
+
+# macOS archivos del sistema
+.DS_Store

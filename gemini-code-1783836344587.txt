@@ -1,0 +1,7 @@
+omr_proyecto/
+├── app.py                  # Futura app Streamlit
+├── generar_plantilla.py    # Script para crear PDF y JSON
+├── template_config.json    # Coordenadas de referencia
+├── plantilla_omr.pdf       # Archivo imprimible generado
+└── assets/
+    └── plantilla.html      # Representación web
