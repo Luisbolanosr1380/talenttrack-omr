@@ -39,6 +39,25 @@ def get_google_drive_direct_url(url):
             return url
     return url
 
+# Función para convertir las respuestas JSON de los candidatos en columnas temporales para filtrado
+def extract_answers_to_columns(df):
+    if df.empty:
+        return df
+    if "respuestas_corregidas" not in df.columns:
+        return df
+        
+    df_copy = df.copy()
+    for q_id in range(1, 14):
+        col_name = f"q_{q_id}"
+        def get_ans(val):
+            try:
+                d = json.loads(str(val))
+                return d.get(str(q_id), "N/A")
+            except:
+                return "N/A"
+        df_copy[col_name] = df_copy["respuestas_corregidas"].apply(get_ans)
+    return df_copy
+
 # Cargar configuración de la plantilla
 try:
     template_config = omr.load_template_config()
@@ -450,37 +469,107 @@ with tab_historial:
     if df_hist.empty:
         st.info("Aún no se han guardado registros en esta sesión.")
     else:
-        # Opciones de filtro
-        search_query = st.text_input("🔍 Buscar por Nombre, Teléfono o Formulario:", "")
-        
-        # Aplicar filtro
-        if search_query:
-            df_filtered = df_hist[
-                df_hist["nombre"].astype(str).str.contains(search_query, case=False) |
-                df_hist["telefono"].astype(str).str.contains(search_query, case=False) |
-                df_hist["formulario"].astype(str).str.contains(search_query, case=False)
-            ]
-        else:
-            df_filtered = df_hist
-            
-        st.write(f"Mostrando {len(df_filtered)} de {len(df_hist)} registros.")
-        
-        # Formatear visualización
-        display_df = df_filtered.copy()
-        
-        # Formatear las columnas JSON para que sean más legibles
+        # Formatear las columnas JSON para la visualización posterior
         def format_json_resp(val):
             try:
                 res_dict = json.loads(val)
-                # Formato legible: Q1: Sí, Q2: No, etc.
                 return ", ".join([f"P{k}: {v}" for k, v in res_dict.items()])
             except:
                 return val
 
+        # Extraer respuestas individuales como columnas temporales para filtrado preciso
+        df_with_filters = extract_answers_to_columns(df_hist)
+        
+        # UI de Filtros Avanzados (Buscador de Talento)
+        with st.expander("🎯 Filtros Avanzados de Perfiles (Buscador de Talento)", expanded=False):
+            st.markdown("Use estos filtros para buscar candidatos específicos según los requisitos de sus vacantes:")
+            
+            f_col1, f_col2, f_col3 = st.columns(3)
+            
+            with f_col1:
+                st.markdown("**Ubicación y Licencia**")
+                filtro_ubi = st.selectbox("¿Vive en Amatitlán/Cercano?", ["Todos", "Sí", "No"])
+                filtro_trans = st.selectbox("¿Tiene transporte propio?", ["Todos", "Sí", "No"])
+                filtro_lic = st.selectbox("Licencia de conducir:", ["Todos", "No", "Tipo B", "Tipo A"])
+                
+            with f_col2:
+                st.markdown("**Disponibilidad y Horarios**")
+                filtro_disp = st.selectbox("¿Disponibilidad Amatitlán?", ["Todos", "Sí", "No"])
+                filtro_turnos = st.selectbox("¿Disponibilidad turnos rotativos?", ["Todos", "Sí", "No"])
+                filtro_nocturno = st.selectbox("¿Puede trabajar de noche?", ["Todos", "Sí", "No"])
+                
+            with f_col3:
+                st.markdown("**Perfil y Experiencia**")
+                filtro_exp = st.selectbox("¿Tiene experiencia (producción)?", ["Todos", "Sí", "No"])
+                filtro_educ = st.selectbox("Nivel educativo mínimo:", ["Todos", "Primaria", "Básicos", "Diversificado", "Universidad"])
+                filtro_cmi = st.selectbox("¿Ha trabajado antes en CMI?", ["Todos", "Sí", "No"])
+        
+        # Caja de búsqueda de texto general
+        search_query = st.text_input("🔍 Buscar por Nombre, Teléfono o Formulario:", "")
+        
+        # Aplicar filtros avanzados
+        df_filtered = df_with_filters.copy()
+        
+        if filtro_ubi != "Todos":
+            df_filtered = df_filtered[df_filtered["q_1"] == filtro_ubi]
+        if filtro_disp != "Todos":
+            df_filtered = df_filtered[df_filtered["q_2"] == filtro_disp]
+        if filtro_turnos != "Todos":
+            df_filtered = df_filtered[df_filtered["q_3"] == filtro_turnos]
+        if filtro_nocturno != "Todos":
+            df_filtered = df_filtered[df_filtered["q_4"] == filtro_nocturno]
+        if filtro_trans != "Todos":
+            df_filtered = df_filtered[df_filtered["q_5"] == filtro_trans]
+        if filtro_exp != "Todos":
+            df_filtered = df_filtered[df_filtered["q_6"] == filtro_exp]
+        if filtro_lic != "Todos":
+            df_filtered = df_filtered[df_filtered["q_9"] == filtro_lic]
+        if filtro_cmi != "Todos":
+            df_filtered = df_filtered[df_filtered["q_10"] == filtro_cmi]
+            
+        if filtro_educ != "Todos":
+            educ_order = {"Primaria": 1, "Básicos": 2, "Diversificado": 3, "Universidad": 4, "N/A": 0}
+            target_level = educ_order.get(filtro_educ, 0)
+            df_filtered = df_filtered[df_filtered["q_8"].map(lambda x: educ_order.get(x, 0)) >= target_level]
+            
+        # Aplicar búsqueda de texto
+        if search_query:
+            df_filtered = df_filtered[
+                df_filtered["nombre"].astype(str).str.contains(search_query, case=False) |
+                df_filtered["telefono"].astype(str).str.contains(search_query, case=False) |
+                df_filtered["formulario"].astype(str).str.contains(search_query, case=False)
+            ]
+            
+        # Mostrar métricas del perfil filtrado y descarga
+        total_hist = len(df_hist)
+        total_filt = len(df_filtered)
+        
+        m_col1, m_col2 = st.columns(2)
+        with m_col1:
+            st.metric("Candidatos Filtrados", f"{total_filt} de {total_hist}")
+        with m_col2:
+            if total_filt > 0:
+                # Quitar columnas de filtrado temporales para exportación
+                export_cols = [c for c in df_filtered.columns if not c.startswith("q_")]
+                csv_df = df_filtered[export_cols].copy()
+                csv_df["respuestas_detectadas"] = csv_df["respuestas_detectadas"].apply(format_json_resp)
+                csv_df["respuestas_corregidas"] = csv_df["respuestas_corregidas"].apply(format_json_resp)
+                
+                csv_data = csv_df.to_csv(index=False, encoding='utf-8')
+                st.download_button(
+                    label="📥 Descargar Lista Filtrada (CSV)",
+                    data=csv_data,
+                    file_name="candidatos_filtrados.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+                
+        # Formatear tabla para visualización
+        display_df = df_filtered.copy()
         display_df["respuestas_detectadas"] = display_df["respuestas_detectadas"].apply(format_json_resp)
         display_df["respuestas_corregidas"] = display_df["respuestas_corregidas"].apply(format_json_resp)
         
-        # Reordenar y renombrar columnas para visualización
+        # Solo columnas básicas en la tabla
         display_df = display_df[[
             "formulario", "nombre", "telefono", "fecha_hora", 
             "respuestas_corregidas", "confianza"
@@ -500,46 +589,49 @@ with tab_historial:
         
         # Visualizar detalles de un registro específico
         st.markdown("#### Detalle de Registro con Imagen")
-        selected_form = st.selectbox(
-            "Seleccione un número de formulario para ver las hojas escaneadas:",
-            options=df_filtered["formulario"].unique()
-        )
         
-        if selected_form:
-            row = df_filtered[df_filtered["formulario"] == selected_form].iloc[-1]
-            st.markdown(f"**Candidato:** {row['nombre']} | **Teléfono:** {row['telefono']} | **Fecha:** {row['fecha_hora']}")
+        if total_filt == 0:
+            st.warning("No hay candidatos que coincidan con los filtros aplicados.")
+        else:
+            selected_form = st.selectbox(
+                "Seleccione un número de formulario para ver las hojas escaneadas (filtrado):",
+                options=df_filtered["formulario"].unique()
+            )
             
-            c_img1, c_img2 = st.columns(2)
-            with c_img1:
-                st.markdown("**Original Escaneada**")
-                path_orig = row["ruta_original"]
+            if selected_form:
+                row = df_filtered[df_filtered["formulario"] == selected_form].iloc[-1]
+                st.markdown(f"**Candidato:** {row['nombre']} | **Teléfono:** {row['telefono']} | **Fecha:** {row['fecha_hora']}")
                 
-                # Intentar descargar los bytes de la imagen en el backend con la Cuenta de Servicio
-                img_bytes_orig = google_service.download_file_bytes(path_orig)
-                
-                if img_bytes_orig is not None:
-                    st.image(img_bytes_orig, use_container_width=True)
-                elif str(path_orig).startswith("http"):
-                    # Fallback al link de redirección pública
-                    direct_url_orig = get_google_drive_direct_url(path_orig)
-                    st.image(direct_url_orig, use_container_width=True)
-                elif os.path.exists(str(path_orig)):
-                    st.image(path_orig, use_container_width=True)
-                else:
-                    st.warning("Imagen original no encontrada.")
-            with c_img2:
-                st.markdown("**Procesada con Marcas**")
-                path_proc = row["ruta_procesada"]
-                
-                # Intentar descargar los bytes de la imagen procesada
-                img_bytes_proc = google_service.download_file_bytes(path_proc)
-                
-                if img_bytes_proc is not None:
-                    st.image(img_bytes_proc, use_container_width=True)
-                elif str(path_proc).startswith("http"):
-                    direct_url_proc = get_google_drive_direct_url(path_proc)
-                    st.image(direct_url_proc, use_container_width=True)
-                elif os.path.exists(str(path_proc)):
-                    st.image(path_proc, use_container_width=True)
-                else:
-                    st.warning("Imagen procesada no encontrada.")
+                c_img1, c_img2 = st.columns(2)
+                with c_img1:
+                    st.markdown("**Original Escaneada**")
+                    path_orig = row["ruta_original"]
+                    
+                    # Descargar de forma segura con cuenta de servicio
+                    img_bytes_orig = google_service.download_file_bytes(path_orig)
+                    
+                    if img_bytes_orig is not None:
+                        st.image(img_bytes_orig, use_container_width=True)
+                    elif str(path_orig).startswith("http"):
+                        direct_url_orig = get_google_drive_direct_url(path_orig)
+                        st.image(direct_url_orig, use_container_width=True)
+                    elif os.path.exists(str(path_orig)):
+                        st.image(path_orig, use_container_width=True)
+                    else:
+                        st.warning("Imagen original no encontrada.")
+                        
+                with c_img2:
+                    st.markdown("**Procesada con Marcas**")
+                    path_proc = row["ruta_procesada"]
+                    
+                    img_bytes_proc = google_service.download_file_bytes(path_proc)
+                    
+                    if img_bytes_proc is not None:
+                        st.image(img_bytes_proc, use_container_width=True)
+                    elif str(path_proc).startswith("http"):
+                        direct_url_proc = get_google_drive_direct_url(path_proc)
+                        st.image(direct_url_proc, use_container_width=True)
+                    elif os.path.exists(str(path_proc)):
+                        st.image(path_proc, use_container_width=True)
+                    else:
+                        st.warning("Imagen procesada no encontrada.")
