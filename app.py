@@ -103,6 +103,11 @@ if not os.path.exists(CSV_PATH):
 
 # Función para cargar historial (remoto de Google Sheets o local de CSV)
 def load_historical_data():
+    headers = [
+        "formulario", "nombre", "telefono", "fecha_hora", 
+        "respuestas_detectadas", "respuestas_corregidas", 
+        "confianza", "ruta_original", "ruta_procesada"
+    ]
     if google_service.is_google_configured():
         try:
             creds = google_service.get_credentials()
@@ -110,15 +115,23 @@ def load_historical_data():
             gc = gspread.authorize(creds)
             sh = gc.open_by_url(st.secrets["spreadsheet_url"])
             worksheet = sh.get_worksheet(0)
-            records = worksheet.get_all_records()
-            if records:
-                return pd.DataFrame(records)
+            
+            # Usar get_all_values para evitar fallas por cabeceras vacías/duplicadas en gspread
+            all_values = worksheet.get_all_values()
+            
+            if not all_values:
+                return pd.DataFrame(columns=headers)
+                
+            first_row = all_values[0]
+            # Si el primer renglón tiene la palabra clave de cabecera 'formulario'
+            if len(first_row) > 0 and first_row[0] == "formulario":
+                data_rows = all_values[1:]
+                cols = first_row
             else:
-                return pd.DataFrame(columns=[
-                    "formulario", "nombre", "telefono", "fecha_hora", 
-                    "respuestas_detectadas", "respuestas_corregidas", 
-                    "confianza", "ruta_original", "ruta_procesada"
-                ])
+                data_rows = all_values
+                cols = headers[:len(all_values[0])]
+                
+            return pd.DataFrame(data_rows, columns=cols)
         except Exception as e:
             st.sidebar.error(f"Falla al conectar Google Sheets: {e}")
             return pd.read_csv(CSV_PATH, encoding='utf-8')

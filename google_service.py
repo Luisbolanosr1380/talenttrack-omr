@@ -119,10 +119,24 @@ def append_to_sheet(row_dict):
             "confianza", "ruta_original", "ruta_procesada"
         ]
         
-        # Verificar si la hoja está vacía y escribir encabezados
+        # Verificar si la hoja está vacía o le faltan encabezados estructurados
         existing_values = worksheet.get_all_values()
-        if not existing_values:
-            worksheet.append_row(headers)
+        is_empty_or_no_headers = (
+            not existing_values or 
+            not existing_values[0] or 
+            existing_values[0][0] != "formulario"
+        )
+        if is_empty_or_no_headers:
+            # Si es una hoja recién creada que suele venir con una fila vacía
+            if len(existing_values) <= 1 and (not existing_values or not existing_values[0] or existing_values[0][0] == ""):
+                worksheet.insert_row(headers, 1)
+                try:
+                    worksheet.delete_rows(2) # Eliminar la fila vacía desplazada
+                except:
+                    pass
+            else:
+                # Si tiene datos pero no la fila de encabezados, la insertamos al inicio
+                worksheet.insert_row(headers, 1)
             
         # Preparar la fila en base al orden de columnas
         row_data = [row_dict.get(h, "") for h in headers]
