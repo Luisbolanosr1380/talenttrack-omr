@@ -160,3 +160,43 @@ def append_to_sheet(row_dict):
     except Exception as e:
         st.error(f"⚠️ Error al guardar registro en Google Sheets: {str(e)}")
         return False
+
+def download_file_bytes(file_url_or_id):
+    """
+    Descarga los bytes de un archivo en Google Drive usando la cuenta de servicio autorizada.
+    Esto permite esquivar restricciones de seguridad organizacionales o bloqueos de compartir con enlaces públicos.
+    """
+    if not is_google_configured():
+        return None
+        
+    try:
+        # Extraer ID del archivo
+        url = str(file_url_or_id)
+        if "drive.google.com" in url:
+            if "/file/d/" in url:
+                file_id = url.split("/file/d/")[1].split("/")[0]
+            elif "id=" in url:
+                file_id = url.split("id=")[1].split("&")[0]
+            else:
+                file_id = url
+        else:
+            file_id = url
+            
+        creds = get_credentials()
+        service = build("drive", "v3", credentials=creds)
+        
+        # Descarga en buffer de memoria
+        from googleapiclient.http import MediaIoBaseDownload
+        import io
+        
+        request = service.files().get_media(fileId=file_id, supportsAllDrives=True)
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
+            
+        return fh.getvalue()
+    except Exception as e:
+        return None

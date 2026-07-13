@@ -513,8 +513,15 @@ with tab_historial:
             with c_img1:
                 st.markdown("**Original Escaneada**")
                 path_orig = row["ruta_original"]
-                direct_url_orig = get_google_drive_direct_url(path_orig)
-                if str(direct_url_orig).startswith("http"):
+                
+                # Intentar descargar los bytes de la imagen en el backend con la Cuenta de Servicio
+                img_bytes_orig = google_service.download_file_bytes(path_orig)
+                
+                if img_bytes_orig is not None:
+                    st.image(img_bytes_orig, use_container_width=True)
+                elif str(path_orig).startswith("http"):
+                    # Fallback al link de redirección pública
+                    direct_url_orig = get_google_drive_direct_url(path_orig)
                     st.image(direct_url_orig, use_container_width=True)
                 elif os.path.exists(str(path_orig)):
                     st.image(path_orig, use_container_width=True)
@@ -523,8 +530,14 @@ with tab_historial:
             with c_img2:
                 st.markdown("**Procesada con Marcas**")
                 path_proc = row["ruta_procesada"]
-                direct_url_proc = get_google_drive_direct_url(path_proc)
-                if str(direct_url_proc).startswith("http"):
+                
+                # Intentar descargar los bytes de la imagen procesada
+                img_bytes_proc = google_service.download_file_bytes(path_proc)
+                
+                if img_bytes_proc is not None:
+                    st.image(img_bytes_proc, use_container_width=True)
+                elif str(path_proc).startswith("http"):
+                    direct_url_proc = get_google_drive_direct_url(path_proc)
                     st.image(direct_url_proc, use_container_width=True)
                 elif os.path.exists(str(path_proc)):
                     st.image(path_proc, use_container_width=True)
