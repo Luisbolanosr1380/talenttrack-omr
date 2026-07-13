@@ -1,7 +1,7 @@
 streamlit
 opencv-python-headless
-numpy
-pandas
+numpy<2
+pandas<3
 pillow
 reportlab
 gspread
