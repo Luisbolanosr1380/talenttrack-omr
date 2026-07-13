@@ -50,16 +50,19 @@ def upload_to_drive(file_path, file_name):
     if not is_google_configured():
         return f"(Modo Local) {file_name}"
         
+    folder_id = get_drive_folder_id()
+    if not folder_id or folder_id.strip() == "" or folder_id.lower() == "none":
+        # Si no se configuró carpeta de Drive, omitir subida y guardar local
+        return f"Local: {file_name}"
+        
     try:
         creds = get_credentials()
         service = build("drive", "v3", credentials=creds)
         
-        folder_id = get_drive_folder_id()
         file_metadata = {
             "name": file_name,
+            "parents": [folder_id]
         }
-        if folder_id:
-            file_metadata["parents"] = [folder_id]
             
         media = MediaFileUpload(file_path, mimetype="image/jpeg", resumable=True)
         
@@ -72,8 +75,7 @@ def upload_to_drive(file_path, file_name):
         
         file_id = drive_file.get("id")
         
-        # Asignar permisos para que cualquiera con el enlace pueda verlo
-        # (Esto permite visualizar las imágenes directo desde el Google Sheet)
+        # Asignar permisos públicos de lectura
         permission = {
             "type": "anyone",
             "role": "reader",
@@ -92,9 +94,18 @@ def upload_to_drive(file_path, file_name):
         return updated_file.get("webViewLink")
         
     except Exception as e:
-        st.error(f"⚠️ Error al subir imagen a Google Drive: {str(e)}")
-        # Retornar ruta local para no romper el flujo
-        return f"Error en Drive: {file_name}"
+        error_msg = str(e)
+        if "storageQuotaExceeded" in error_msg or "quota" in error_msg.lower():
+            # Advertencia amigable sobre cuota de Cuenta de Servicio en cuentas personales de Drive
+            st.warning(
+                "⚠️ **Almacenamiento en Drive omitido:** Las cuentas de servicio de Google no tienen cuota "
+                "de almacenamiento propia en cuentas personales de Google Drive. **Tus respuestas de texto SÍ se guardaron en Google Sheets.** "
+                "Para evitar este mensaje de advertencia, puedes eliminar el campo 'drive_folder_id' de los secretos de tu aplicación en Streamlit."
+            )
+        else:
+            st.error(f"⚠️ Error al subir imagen a Google Drive: {error_msg}")
+        # Retornar valor local seguro
+        return f"Local (No subido a Drive): {file_name}"
 
 def append_to_sheet(row_dict):
     """
