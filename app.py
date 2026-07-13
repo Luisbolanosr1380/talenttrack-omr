@@ -22,6 +22,23 @@ os.makedirs("data/originales", exist_ok=True)
 os.makedirs("data/procesadas", exist_ok=True)
 CSV_PATH = "data/respuestas.csv"
 
+# Función para convertir enlace de Google Drive en URL directa de imagen para Streamlit
+def get_google_drive_direct_url(url):
+    if not isinstance(url, str):
+        return url
+    if "drive.google.com" in url:
+        try:
+            if "/file/d/" in url:
+                file_id = url.split("/file/d/")[1].split("/")[0]
+            elif "id=" in url:
+                file_id = url.split("id=")[1].split("&")[0]
+            else:
+                return url
+            return f"https://drive.google.com/uc?export=download&id={file_id}"
+        except:
+            return url
+    return url
+
 # Cargar configuración de la plantilla
 try:
     template_config = omr.load_template_config()
@@ -496,8 +513,9 @@ with tab_historial:
             with c_img1:
                 st.markdown("**Original Escaneada**")
                 path_orig = row["ruta_original"]
-                if str(path_orig).startswith("http"):
-                    st.image(path_orig, use_container_width=True)
+                direct_url_orig = get_google_drive_direct_url(path_orig)
+                if str(direct_url_orig).startswith("http"):
+                    st.image(direct_url_orig, use_container_width=True)
                 elif os.path.exists(str(path_orig)):
                     st.image(path_orig, use_container_width=True)
                 else:
@@ -505,8 +523,9 @@ with tab_historial:
             with c_img2:
                 st.markdown("**Procesada con Marcas**")
                 path_proc = row["ruta_procesada"]
-                if str(path_proc).startswith("http"):
-                    st.image(path_proc, use_container_width=True)
+                direct_url_proc = get_google_drive_direct_url(path_proc)
+                if str(direct_url_proc).startswith("http"):
+                    st.image(direct_url_proc, use_container_width=True)
                 elif os.path.exists(str(path_proc)):
                     st.image(path_proc, use_container_width=True)
                 else:
