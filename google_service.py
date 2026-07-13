@@ -66,11 +66,12 @@ def upload_to_drive(file_path, file_name):
             
         media = MediaFileUpload(file_path, mimetype="image/jpeg", resumable=True)
         
-        # Subir archivo
+        # Subir archivo (con soporte para Unidades Compartidas)
         drive_file = service.files().create(
             body=file_metadata,
             media_body=media,
-            fields="id, webViewLink"
+            fields="id, webViewLink",
+            supportsAllDrives=True
         ).execute()
         
         file_id = drive_file.get("id")
@@ -82,13 +83,15 @@ def upload_to_drive(file_path, file_name):
         }
         service.permissions().create(
             fileId=file_id,
-            body=permission
+            body=permission,
+            supportsAllDrives=True
         ).execute()
         
         # Consultar la URL pública final
         updated_file = service.files().get(
             fileId=file_id,
-            fields="webViewLink"
+            fields="webViewLink",
+            supportsAllDrives=True
         ).execute()
         
         return updated_file.get("webViewLink")
