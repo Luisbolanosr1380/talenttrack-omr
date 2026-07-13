@@ -93,27 +93,27 @@ def generar():
         },
         {
             "id": 9,
-            "text": "¿Cuándo podría iniciar?",
-            "options": ["Inmediatamente", "En 1 semana", "En 15 días", "Más de 15 días"]
-        },
-        {
-            "id": 10,
-            "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
-            "options": ["Sí", "No"]
-        },
-        {
-            "id": 11,
             "text": "¿Cuenta con licencia de conducir?",
             "options": ["No", "Tipo B", "Tipo A"]
         },
         {
-            "id": 12,
+            "id": 10,
             "text": "¿Ha trabajado anteriormente en CMI?",
             "options": ["Sí", "No"]
         },
         {
-            "id": 13,
+            "id": 11,
             "text": "¿Tiene familiares trabajando actualmente en CMI?",
+            "options": ["Sí", "No"]
+        },
+        {
+            "id": 12,
+            "text": "¿Cuándo podría iniciar?",
+            "options": ["Inmediatamente", "En 1 semana", "En 15 días", "Más de 15 días"]
+        },
+        {
+            "id": 13,
+            "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
             "options": ["Sí", "No"]
         }
     ]

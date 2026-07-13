@@ -39,11 +39,11 @@ def crear_imagen_prueba():
         6: 1,
         7: 2,
         8: 2,
-        9: 0,
-        10: 0,
-        11: 1, # Tipo B
-        12: 1, # No
-        13: 1  # No
+        9: 1,  # Tipo B (Licencia)
+        10: 1, # No (Trabajado CMI)
+        11: 1, # No (Familiares CMI)
+        12: 0, # Inmediatamente (Inicio)
+        13: 0  # Sí (Autorización contactar)
     }
     
     # 3. Dibujar las burbujas

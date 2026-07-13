@@ -210,33 +210,26 @@
         },
         {
             "id": 9,
-            "text": "¿Cuándo podría iniciar?",
+            "text": "¿Cuenta con licencia de conducir?",
             "opciones": [
                 {
                     "indice": 0,
-                    "texto": "Inmediatamente",
+                    "texto": "No",
                     "x": 90,
                     "y": 476,
                     "radius": 7
                 },
                 {
                     "indice": 1,
-                    "texto": "En 1 semana",
-                    "x": 210,
+                    "texto": "Tipo B",
+                    "x": 190,
                     "y": 476,
                     "radius": 7
                 },
                 {
                     "indice": 2,
-                    "texto": "En 15 días",
-                    "x": 330,
-                    "y": 476,
-                    "radius": 7
-                },
-                {
-                    "indice": 3,
-                    "texto": "Más de 15 días",
-                    "x": 450,
+                    "texto": "Tipo A",
+                    "x": 290,
                     "y": 476,
                     "radius": 7
                 }
@@ -244,7 +237,7 @@
         },
         {
             "id": 10,
-            "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
+            "text": "¿Ha trabajado anteriormente en CMI?",
             "opciones": [
                 {
                     "indice": 0,
@@ -264,26 +257,19 @@
         },
         {
             "id": 11,
-            "text": "¿Cuenta con licencia de conducir?",
+            "text": "¿Tiene familiares trabajando actualmente en CMI?",
             "opciones": [
                 {
                     "indice": 0,
-                    "texto": "No",
+                    "texto": "Sí",
                     "x": 90,
                     "y": 546,
                     "radius": 7
                 },
                 {
                     "indice": 1,
-                    "texto": "Tipo B",
+                    "texto": "No",
                     "x": 190,
-                    "y": 546,
-                    "radius": 7
-                },
-                {
-                    "indice": 2,
-                    "texto": "Tipo A",
-                    "x": 290,
                     "y": 546,
                     "radius": 7
                 }
@@ -291,19 +277,33 @@
         },
         {
             "id": 12,
-            "text": "¿Ha trabajado anteriormente en CMI?",
+            "text": "¿Cuándo podría iniciar?",
             "opciones": [
                 {
                     "indice": 0,
-                    "texto": "Sí",
+                    "texto": "Inmediatamente",
                     "x": 90,
                     "y": 581,
                     "radius": 7
                 },
                 {
                     "indice": 1,
-                    "texto": "No",
-                    "x": 190,
+                    "texto": "En 1 semana",
+                    "x": 210,
+                    "y": 581,
+                    "radius": 7
+                },
+                {
+                    "indice": 2,
+                    "texto": "En 15 días",
+                    "x": 330,
+                    "y": 581,
+                    "radius": 7
+                },
+                {
+                    "indice": 3,
+                    "texto": "Más de 15 días",
+                    "x": 450,
                     "y": 581,
                     "radius": 7
                 }
@@ -311,7 +311,7 @@
         },
         {
             "id": 13,
-            "text": "¿Tiene familiares trabajando actualmente en CMI?",
+            "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
             "opciones": [
                 {
                     "indice": 0,
