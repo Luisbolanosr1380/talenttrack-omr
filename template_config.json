@@ -28,14 +28,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 240,
+                    "y": 196,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 240,
+                    "y": 196,
                     "radius": 7
                 }
             ]
@@ -48,14 +48,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 288,
+                    "y": 231,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 288,
+                    "y": 231,
                     "radius": 7
                 }
             ]
@@ -68,14 +68,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 336,
+                    "y": 266,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 336,
+                    "y": 266,
                     "radius": 7
                 }
             ]
@@ -88,14 +88,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 384,
+                    "y": 301,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 384,
+                    "y": 301,
                     "radius": 7
                 }
             ]
@@ -108,14 +108,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 432,
+                    "y": 336,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 432,
+                    "y": 336,
                     "radius": 7
                 }
             ]
@@ -128,14 +128,14 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 480,
+                    "y": 371,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 480,
+                    "y": 371,
                     "radius": 7
                 }
             ]
@@ -148,28 +148,28 @@
                     "indice": 0,
                     "texto": "Sin experiencia",
                     "x": 90,
-                    "y": 528,
+                    "y": 406,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "Menos de 1 año",
                     "x": 210,
-                    "y": 528,
+                    "y": 406,
                     "radius": 7
                 },
                 {
                     "indice": 2,
                     "texto": "De 1 a 2 años",
                     "x": 330,
-                    "y": 528,
+                    "y": 406,
                     "radius": 7
                 },
                 {
                     "indice": 3,
                     "texto": "Más de 2 años",
                     "x": 450,
-                    "y": 528,
+                    "y": 406,
                     "radius": 7
                 }
             ]
@@ -182,28 +182,28 @@
                     "indice": 0,
                     "texto": "Primaria",
                     "x": 90,
-                    "y": 576,
+                    "y": 441,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "Básicos",
                     "x": 210,
-                    "y": 576,
+                    "y": 441,
                     "radius": 7
                 },
                 {
                     "indice": 2,
                     "texto": "Diversificado",
                     "x": 330,
-                    "y": 576,
+                    "y": 441,
                     "radius": 7
                 },
                 {
                     "indice": 3,
                     "texto": "Universidad",
                     "x": 450,
-                    "y": 576,
+                    "y": 441,
                     "radius": 7
                 }
             ]
@@ -216,28 +216,28 @@
                     "indice": 0,
                     "texto": "Inmediatamente",
                     "x": 90,
-                    "y": 624,
+                    "y": 476,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "En 1 semana",
                     "x": 210,
-                    "y": 624,
+                    "y": 476,
                     "radius": 7
                 },
                 {
                     "indice": 2,
                     "texto": "En 15 días",
                     "x": 330,
-                    "y": 624,
+                    "y": 476,
                     "radius": 7
                 },
                 {
                     "indice": 3,
                     "texto": "Más de 15 días",
                     "x": 450,
-                    "y": 624,
+                    "y": 476,
                     "radius": 7
                 }
             ]
@@ -250,14 +250,81 @@
                     "indice": 0,
                     "texto": "Sí",
                     "x": 90,
-                    "y": 672,
+                    "y": 511,
                     "radius": 7
                 },
                 {
                     "indice": 1,
                     "texto": "No",
                     "x": 190,
-                    "y": 672,
+                    "y": 511,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "¿Cuenta con licencia de conducir?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "No",
+                    "x": 90,
+                    "y": 546,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "Tipo B",
+                    "x": 190,
+                    "y": 546,
+                    "radius": 7
+                },
+                {
+                    "indice": 2,
+                    "texto": "Tipo A",
+                    "x": 290,
+                    "y": 546,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "¿Ha trabajado anteriormente en CMI?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 581,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 581,
+                    "radius": 7
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "¿Tiene familiares trabajando actualmente en CMI?",
+            "opciones": [
+                {
+                    "indice": 0,
+                    "texto": "Sí",
+                    "x": 90,
+                    "y": 616,
+                    "radius": 7
+                },
+                {
+                    "indice": 1,
+                    "texto": "No",
+                    "x": 190,
+                    "y": 616,
                     "radius": 7
                 }
             ]

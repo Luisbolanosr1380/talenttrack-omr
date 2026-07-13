@@ -28,28 +28,28 @@ def generar():
     
     # 2. Dibujar Encabezado e Instrucciones
     c.setFont("Helvetica-Bold", 14)
-    c.drawCentredString(w / 2, h - 90, "TALENTTRACK OMR - REGISTRO DE CANDIDATO")
+    c.drawCentredString(w / 2, h - 80, "TALENTTRACK OMR - REGISTRO DE CANDIDATO")
     
     c.setFont("Helvetica", 9)
-    c.drawCentredString(w / 2, h - 110, "Instrucciones: Rellene firmemente con bolígrafo negro o azul oscuro dentro de las casillas correspondientes.")
-    c.drawCentredString(w / 2, h - 122, "Evite tachaduras y no doble la hoja para garantizar una correcta lectura digital.")
+    c.drawCentredString(w / 2, h - 100, "Instrucciones: Rellene firmemente con bolígrafo negro o azul oscuro dentro de las casillas correspondientes.")
+    c.drawCentredString(w / 2, h - 112, "Evite tachaduras y no doble la hoja para garantizar una correcta lectura digital.")
     
     # 3. Campos de información del Candidato (Visual)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(70, h - 150, "No. Formulario: _________________")
-    c.drawString(240, h - 150, "Nombre: _____________________________________")
-    c.drawString(450, h - 150, "Teléfono: _______________")
+    c.drawString(70, h - 135, "No. Formulario: _________________")
+    c.drawString(240, h - 135, "Nombre: _____________________________________")
+    c.drawString(450, h - 135, "Teléfono: _______________")
     
     # Dibujar línea divisoria sutil
     c.setStrokeColorRGB(0.8, 0.8, 0.8)
     c.setLineWidth(1)
-    c.line(70, h - 165, w - 70, h - 165)
+    c.line(70, h - 145, w - 70, h - 145)
     
     # Restaurar color de texto negro
     c.setStrokeColorRGB(0, 0, 0)
     c.setFillColorRGB(0, 0, 0)
     
-    # Definición de las 10 preguntas
+    # Definición de las 13 preguntas
     preguntas_data = [
         {
             "id": 1,
@@ -100,6 +100,21 @@ def generar():
             "id": 10,
             "text": "¿Autoriza que TalentTrack le contacte para otras plazas?",
             "options": ["Sí", "No"]
+        },
+        {
+            "id": 11,
+            "text": "¿Cuenta con licencia de conducir?",
+            "options": ["No", "Tipo B", "Tipo A"]
+        },
+        {
+            "id": 12,
+            "text": "¿Ha trabajado anteriormente en CMI?",
+            "options": ["Sí", "No"]
+        },
+        {
+            "id": 13,
+            "text": "¿Tiene familiares trabajando actualmente en CMI?",
+            "options": ["Sí", "No"]
         }
     ]
     
@@ -116,16 +131,16 @@ def generar():
     }
     
     # Posicionar preguntas
-    start_y = 570  # y en ReportLab
-    step_y = 48
+    start_y = 610  # y en ReportLab
+    step_y = 35
     radius = 7
     
     for i, q in enumerate(preguntas_data):
         y_text = start_y - (i * step_y)
-        y_options = y_text - 18
+        y_options = y_text - 14
         
         # Dibujar pregunta
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont("Helvetica-Bold", 9.5)
         c.drawString(70, y_text, f"{q['id']}. {q['text']}")
         
         q_config = {
@@ -140,6 +155,8 @@ def generar():
         
         if num_opts == 2:
             xs = [90, 190]
+        elif num_opts == 3:
+            xs = [90, 190, 290]
         else:
             xs = [90, 210, 330, 450]
             

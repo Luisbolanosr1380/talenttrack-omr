@@ -40,7 +40,10 @@ def crear_imagen_prueba():
         7: 2,
         8: 2,
         9: 0,
-        10: 0
+        10: 0,
+        11: 1, # Tipo B
+        12: 1, # No
+        13: 1  # No
     }
     
     # 3. Dibujar las burbujas
